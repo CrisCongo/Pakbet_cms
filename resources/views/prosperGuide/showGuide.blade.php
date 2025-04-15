@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'FAQs')
+@section('title', 'Prosper Guides')
 @section('content')
     <style>
         body {
@@ -58,7 +58,7 @@
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
-                <h1 class="m-0">Frequently Asked Questions</h1>
+                <h1 class="m-0">Prosper Guide</h1>
             </div>
         </div>
 
@@ -69,7 +69,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center" style="background-color: rgba(162, 32, 26, 1);">
-                                <h3 class="card-title text-white">FAQs List</h3>
+                                <h3 class="card-title text-white">Guide List</h3>
                             </div>
 
                             <div class="d-flex flex-wrap gap-2 m-3 btn-group-mobile">
@@ -82,8 +82,8 @@
                             </div>
 
                             <div class="d-flex flex-wrap gap-2 m-3 btn-group-mobile">
-                                <button class="btn btn-success btn-sm bulk-action" data-action="activate">Activate Selected</button>
-                                <button class="btn btn-danger btn-sm bulk-action" data-action="deactivate">Deactivate Selected</button>
+                                <button class="btn btn-success btn-sm bulk-action" data-action="activate">Publish Selected</button>
+                                <button class="btn btn-danger btn-sm bulk-action" data-action="deactivate">Archive Selected</button>
                             </div>
 
                             <div class="table-responsive">
@@ -94,22 +94,31 @@
                                                 Select All
                                                 <input type="checkbox" id="select-all">
                                             </label></th>
-                                            <th>FAQ ID</th>
-                                            <th>Question</th>
-                                            <th>Answer</th>
-                                            <th>Status</th>
+                                            <th>Guide ID</th>
+                                            <th>Zodiac</th>
+                                            <th>Title</th>
+                                            <th>Overview</th>
+                                            <th>Career</th>
+                                            <th>Health</th>
+                                            <th>Love</th>
+                                            <th>Wealth</th>
                                             <th>Publish Date</th>
-                                            <th>Actions</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!--@ foreach /**($faqs as $faq)**/-->
+                                        <!--@ foreach /**($guides as $guide)**/-->
                                             <tr>
-                                                <td><input type="checkbox" name="faqs_checkbox"></td><!--value="{ { $customer->user_id }}"-->
-                                                <td>1</td><!--FAQ ID-->
-                                                <td>Here is a question</td><!--Question-->
-                                                <td>Here is an answer</td><!--Answer-->
-                                                <td><span class="badge bg-success">Post status</td><!--Status-->
+                                                <td><input type="checkbox" name="guide_checkbox"></td>
+                                                <td>1</td><!--Guide ID-->
+                                                <td>Rat</td><!--Zodiac Selection-->
+                                                <td>Title</td><!--Title-->
+                                                <td>Here is an Overview</td><!--Overview content-->
+                                                <td>Here is a Career Guide</td><!--Career content-->
+                                                <td>Here is a Health Guide</td><!--Health content-->
+                                                <td>Here is a Love Guide</td><!--Love content-->
+                                                <td>Here is a Wealth Guide</td><!--Wealth content-->
+                                                <td><span class="badge bg-success">Post status</td><!--Status; could be published, archived, or draft-->
                                                 <td>02/02/2025</td><!--Publish Date-->
                                                 <td>
                                                     <button class="btn btn-outline-dark btn-sm edit-btn"
@@ -127,7 +136,7 @@
                             </div>
                             <div class="d-flex flex-wrap gap-2 m-3 btn-group-mobile">
                                 <button id="addFAQ " class="btn btn-sm text-white" style="background-color: rgba(162, 32, 26, 1);">
-                                    Add FAQ
+                                    Add Guide
                                 </button>
                             </div>
                         </div>
