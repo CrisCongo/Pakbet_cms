@@ -11,9 +11,7 @@ class BlogController extends Controller
     public function index()
     {
         //$posts = Blog::all();
-        return view('blogs.show');
+        return view('blogs.show');//temporary
     }
-
-
 }
 

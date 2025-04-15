@@ -15,7 +15,7 @@ Route::post('/logout', function () {
     request()->session()->invalidate();
     request()->session()->regenerateToken();
     return redirect('/login');
-})->name('logout');
+})->name('logout');//may problem pa
 
 
 Route::get('/dashboard', function () {
