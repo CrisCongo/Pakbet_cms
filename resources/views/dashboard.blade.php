@@ -32,7 +32,7 @@
                     <i class="fas fa-book fa-3x text-primary mb-3"></i>
                     <h5 class="card-title">Prosper Guide</h5>
                     <p class="card-text">View and edit the Prosper Guide content.</p>
-                    <a href="#" class="btn btn-primary"><a href="{{ route('guide.index') }}">Go to Guide</a></a>
+                    <a href="{{ route('guide.index') }}" class="btn btn-primary">Go to Guide</a>
                 </div>
             </div>
         </div>
