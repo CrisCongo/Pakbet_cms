@@ -127,7 +127,7 @@
                                                         title="Edit FAQs Details"
                                                         >
                                                         Edit
-                                                    </button><!--data-id="{ { $customer->user_id }}"-->
+                                                    </button><!--data-id="{ { $guide->xxxx }}"-->
                                                 </td>
                                             </tr>
                                         <!--@ endforeach-->

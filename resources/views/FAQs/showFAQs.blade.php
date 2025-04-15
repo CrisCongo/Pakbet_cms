@@ -105,7 +105,7 @@
                                     <tbody>
                                         <!--@ foreach /**($faqs as $faq)**/-->
                                             <tr>
-                                                <td><input type="checkbox" name="faqs_checkbox"></td><!--value="{ { $customer->user_id }}"-->
+                                                <td><input type="checkbox" name="faqs_checkbox"></td><!--value="{ { $faq->xxxx }}"-->
                                                 <td>1</td><!--FAQ ID-->
                                                 <td>Here is a question</td><!--Question-->
                                                 <td>Here is an answer</td><!--Answer-->
@@ -118,7 +118,7 @@
                                                         title="Edit FAQs Details"
                                                         >
                                                         Edit
-                                                    </button><!--data-id="{ { $customer->user_id }}"-->
+                                                    </button><!--data-id="{ { $faq->xxx }}"-->
                                                 </td>
                                             </tr>
                                         <!--@ endforeach-->
