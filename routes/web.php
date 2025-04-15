@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\FAQcontroller;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -24,5 +25,6 @@ Route::get('/dashboard', function () {
 
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 
+Route::get('/FAQs', [FAQcontroller::class, 'index'])->name('faqs.index');
 
 

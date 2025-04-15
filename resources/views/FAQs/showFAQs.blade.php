@@ -1,5 +1,6 @@
+@extends('layouts.app')
+@section('title', 'FAQs')
 @section('content')
-
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -102,13 +103,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!--@foreach ($customers as $customer)-->
+                                        <!--@ foreach /**($faqs as $faq)**/-->
                                             <tr>
-                                                <td><input type="checkbox" name="customer_checkbox"></td><!--value="{{ $customer->user_id }}"-->
+                                                <td><input type="checkbox" name="customer_checkbox"></td><!--value="{ { $customer->user_id }}"-->
                                                 <td>1</td><!--FAQ ID-->
                                                 <td>Here is a question</td><!--Question-->
                                                 <td>Here is an answer</td><!--Answer-->
-                                                <td>Post status</td><!--Status-->
+                                                <td><span class="badge bg-success">Post status</td><!--Status-->
                                                 <td>02/02/2025</td><!--Publish Date-->
                                                 <td>
                                                     <button class="btn btn-outline-dark btn-sm edit-btn"
@@ -117,12 +118,17 @@
                                                         title="Edit FAQs Details"
                                                         >
                                                         Edit
-                                                    </button><!--data-id="{{ $customer->user_id }}"-->
+                                                    </button><!--data-id="{ { $customer->user_id }}"-->
                                                 </td>
                                             </tr>
-                                        <!--@endforeach-->
+                                        <!--@ endforeach-->
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 m-3 btn-group-mobile">
+                                <button id="addFAQ " class="btn btn-sm text-white" style="background-color: rgba(162, 32, 26, 1);">
+                                    Add FAQ
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -130,4 +136,10 @@
             </div>
         </section>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 @endsection

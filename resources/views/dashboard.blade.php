@@ -21,7 +21,7 @@
                     <i class="fas fa-question-circle fa-3x text-primary mb-3"></i>
                     <h5 class="card-title">FAQ</h5>
                     <p class="card-text">Update and manage your FAQs.</p>
-                    <a href="#" class="btn btn-primary">Go to FAQ</a>
+                    <a href="{{ route('faqs.index') }}" class="btn btn-primary">Go to FAQ</a>
                 </div>
             </div>
         </div>

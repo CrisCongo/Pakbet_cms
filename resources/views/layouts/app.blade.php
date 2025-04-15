@@ -12,10 +12,13 @@
             background-color: #FDF9EE;
             color: #333;
         }
+        nav{
+            background-color: #8B0000;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ route('dashboard') }}">Pakbet CMS</a>
         </div>
