@@ -28,4 +28,4 @@ Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 
 Route::get('/FAQs', [FAQcontroller::class, 'index'])->name('faqs.index');
 
-Route::get('/FAQs', [GuideController::class, 'index'])->name('guide.index');
+Route::get('/prosperGuide', [GuideController::class, 'index'])->name('guide.index');
