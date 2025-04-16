@@ -25,6 +25,8 @@ Route::get('/dashboard', function () {
 })->name('dashboard');//->middleware('auth'); <--mamaya na to hahahaha di pa ayos login
 
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/edit', [BlogController::class, 'edit'])->name('blog.edit');
+Route::get('/blogs/add', [BlogController::class, 'add'])->name('blog.add');
 
 Route::get('/FAQs', [FAQcontroller::class, 'index'])->name('faqs.index');
 

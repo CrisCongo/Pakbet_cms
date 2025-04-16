@@ -13,5 +13,12 @@ class BlogController extends Controller
         //$posts = Blog::all();
         return view('blogs.show');//temporary
     }
+    public function edit()
+    {
+        return view('blogs.editBlog');//temporary
+    }
+    public function add(){
+        return view('blogs.addBlog');
+    }
 }
 
