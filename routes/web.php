@@ -29,5 +29,9 @@ Route::get('/blogs/edit', [BlogController::class, 'edit'])->name('blog.edit');
 Route::get('/blogs/add', [BlogController::class, 'add'])->name('blog.add');
 
 Route::get('/FAQs', [FAQcontroller::class, 'index'])->name('faqs.index');
+Route::get('/FAQs/edit', [FAQcontroller::class, 'edit'])->name('faq.edit');
+Route::get('/FAQs/add', [FAQcontroller::class, 'add'])->name('faq.add');
 
 Route::get('/prosperGuide', [GuideController::class, 'index'])->name('guide.index');
+Route::get('/prosperGuide/edit', [GuideController::class, 'edit'])->name('guide.edit');
+Route::get('/prosperGuide/add', [GuideController::class, 'add'])->name('guide.add');

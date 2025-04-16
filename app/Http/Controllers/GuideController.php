@@ -11,4 +11,12 @@ class GuideController extends Controller
     {
         return view('prosperGuide.showGuide');//temporary
     }
+    public function edit()
+    {
+        return view('prosperGuide.editGuide');
+    }
+    public function add()
+    {
+        return view('prosperGuide.addGuide');
+    }
 }

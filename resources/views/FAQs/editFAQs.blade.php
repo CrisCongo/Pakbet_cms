@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Blog')
+@section('title', 'Edit FAQ')
 
 @section('content')
 
@@ -50,35 +50,20 @@
 <div class="content-container flex-grow-1">
     <div class="container py-5">
         <div class="card card-custom">
-            <h2 class="fw-bold text-center mb-4">Edit Blog</h2>
+            <h2 class="fw-bold text-center mb-4">Edit FAQ</h2>
 
             <form action="#" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Blog Title" value="#">
-                    <label for="title">Title</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="category" name="category" placeholder="Category" value="#">
-                    <label for="category">Category</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="tags" name="tags" placeholder="Tags" value="#">
-                    <label for="tags">Tags (comma-separated)</label>
+                <div class="mb-3">
+                    <label for="question" class="form-label">Question</label>
+                    <textarea id="question" name="question" class="tinymce-editor">Here's a question</textarea>
                 </div>
 
                 <div class="mb-3">
-                    <label for="cover_image" class="form-label">Cover Image</label>
-                    <input class="form-control" type="file" id="cover_image" name="cover_image">
-                </div>
-
-                <div class="mb-3">
-                    <label for="content" class="form-label">Content</label>
-                    <textarea id="content" name="content" class="tinymce-editor">#</textarea>
+                    <label for="answer" class="form-label">Answer</label>
+                    <textarea id="answer" name="answer" class="tinymce-editor">Here's an answer</textarea>
                 </div>
 
                 <div class="form-floating mb-3">
@@ -96,7 +81,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('blogs.index') }}" class="btn btn-cancel me-2">Cancel</a>
+                    <a href="{{ route('faqs.index') }}" class="btn btn-cancel me-2">Cancel</a>
                     <button type="submit" class="btn btn-custom">Save Changes</button>
                 </div>
 

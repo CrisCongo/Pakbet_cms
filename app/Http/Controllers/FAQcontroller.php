@@ -11,4 +11,12 @@ class FAQcontroller extends Controller
     {
         return view('FAQs.showFAQs');//temporary
     }
+    public function edit()
+    {
+        return view('FAQs.editFAQs');
+    }
+    public function add()
+    {
+        return view('FAQs.addFAQs');
+    }
 }

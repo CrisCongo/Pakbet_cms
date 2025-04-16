@@ -78,7 +78,7 @@
 
                 <div class="mb-3">
                     <label for="content" class="form-label">Content</label>
-                    <textarea id="content" name="content">#</textarea>
+                    <textarea id="content" name="content" class="tinymce-editor">#</textarea>
                 </div>
 
                 <div class="form-floating mb-3">

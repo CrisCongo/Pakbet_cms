@@ -58,7 +58,7 @@
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
-                <h1 class="m-0">Blogs Management</h1>
+                <h1 class="m-0">Manage Blogs</h1>
             </div>
         </div>
 
@@ -133,8 +133,9 @@
                                 </table>
                             </div>
                             <div class="d-flex flex-wrap gap-2 m-3 btn-group-mobile">
-                                <a href="{{ route('blog.edit') }}"
-                                    class="btn btn-outline-dark btn-sm edit-btn"
+                                <a href="{{ route('blog.add') }}"
+                                    class="btn btn-sm text-white"
+                                    style="background-color: rgba(162, 32, 26, 1);"
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
                                     title="Add Blogs Here">

@@ -58,7 +58,7 @@
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
-                <h1 class="m-0">Frequently Asked Questions</h1>
+                <h1 class="m-0">Manage FAQs</h1>
             </div>
         </div>
 
@@ -82,8 +82,8 @@
                             </div>
 
                             <div class="d-flex flex-wrap gap-2 m-3 btn-group-mobile">
-                                <button class="btn btn-success btn-sm bulk-action" data-action="activate">Activate Selected</button>
-                                <button class="btn btn-danger btn-sm bulk-action" data-action="deactivate">Deactivate Selected</button>
+                                <button class="btn btn-success btn-sm bulk-action" data-action="activate">Publish Selected</button>
+                                <button class="btn btn-danger btn-sm bulk-action" data-action="deactivate">Archive Selected</button>
                             </div>
 
                             <div class="table-responsive">
@@ -112,13 +112,13 @@
                                                 <td><span class="badge bg-success">Post status</td><!--Status-->
                                                 <td>02/02/2025</td><!--Publish Date-->
                                                 <td>
-                                                    <button class="btn btn-outline-dark btn-sm edit-btn"
+                                                    <a href="{{ route('faq.edit') }}"
+                                                        class="btn btn-outline-dark btn-sm edit-btn"
                                                         data-bs-toggle="tooltip"
                                                         data-bs-placement="top"
-                                                        title="Edit FAQs Details"
-                                                        >
+                                                        title="Edit FAQs Details">
                                                         Edit
-                                                    </button><!--data-id="{ { $faq->xxx }}"-->
+                                                    </a><!--data-id="{ { $faq->xxx }}"-->
                                                 </td>
                                             </tr>
                                         <!--@ endforeach-->
@@ -126,9 +126,14 @@
                                 </table>
                             </div>
                             <div class="d-flex flex-wrap gap-2 m-3 btn-group-mobile">
-                                <button id="addFAQ " class="btn btn-sm text-white" style="background-color: rgba(162, 32, 26, 1);">
+                                <a href="{{ route('faq.add') }}"
+                                    class="btn btn-sm text-white"
+                                    style="background-color: rgba(162, 32, 26, 1);"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Add FAQs Here">
                                     Add FAQ
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
