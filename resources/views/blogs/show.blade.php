@@ -94,10 +94,11 @@
                                                 Select All
                                                 <input type="checkbox" id="select-all">
                                             </label></th>
+                                            <th>Blog ID</th>
                                             <th>Title</th>
                                             <th>Category</th>
                                             <th>Tags</th>
-                                            <th>Cover</th>
+                                            <th>Cover Image</th>
                                             <th>Content</th>
                                             <th>Publish Date</th>
                                             <th>Status</th>
@@ -117,16 +118,14 @@
                                                 <td><span class="badge bg-secondary">Post status</td><!--Status-->
                                                 <td>02/02/2025</td><!--Publish Date-->
                                                 <td>
-                                                    <td>
-                                                        <a href="{{ route('blog.edit') }}"
-                                                           class="btn btn-outline-dark btn-sm edit-btn"
-                                                           data-bs-toggle="tooltip"
-                                                           data-bs-placement="top"
-                                                           title="Edit Blogs Details">
-                                                            Edit
-                                                        </a>
-                                                    </td><!--data-id="{ { $faq->xxx }}"-->
-                                                </td>
+                                                    <a href="{{ route('blog.edit') }}"
+                                                        class="btn btn-outline-dark btn-sm edit-btn"
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-placement="top"
+                                                        title="Edit Blogs Details">
+                                                        Edit
+                                                    </a>
+                                                </td><!--data-id="{ { $faq->xxx }}"-->
                                             </tr>
                                         <!--@ endforeach-->
                                     </tbody>
