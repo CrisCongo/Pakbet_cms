@@ -100,8 +100,8 @@
                                             <th>Tags</th>
                                             <th>Cover Image</th>
                                             <th>Content</th>
-                                            <th>Publish Date</th>
                                             <th>Status</th>
+                                            <th>Publish Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
