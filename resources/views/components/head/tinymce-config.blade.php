@@ -7,7 +7,19 @@
             menubar: false,
             plugins: 'lists link image preview code',
             toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | link image | preview code',
-            branding: false
+            branding: false,
+            setup: function(editor) {
+                editor.on('input', function() {
+                    if (typeof updatePreview === 'function') {
+                        updatePreview();
+                    }
+                });
+                editor.on('change', function() {
+                    if (typeof updatePreview === 'function') {
+                        updatePreview();
+                    }
+                });
+            }
         });
     </script>
 </div>

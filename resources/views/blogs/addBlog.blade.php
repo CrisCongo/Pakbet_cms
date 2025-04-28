@@ -74,18 +74,6 @@
     <div class="container py-5">
         <div class="flex-container">
 
-            <!-- Live Preview Section -->
-            <div class="preview-container">
-                <h3>Live Preview</h3>
-                <h4 id="preview-title">Title will appear here</h4>
-                <p id="preview-category">Category will appear here</p>
-                <p id="preview-tags">Tags will appear here</p>
-                <p id="preview-content">Content will appear here</p>
-                <p id="preview-publish-date">Publish Date will appear here</p>
-                <p id="preview-status">Status will appear here</p>
-            </div>
-
-            <!-- Form Card Section -->
             <div class="card card-custom">
                 <h2 class="fw-bold text-center mb-4">Add Blog</h2>
 
@@ -94,7 +82,7 @@
                     @method('PUT')
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Blog Title" oninput="updatePreview()">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Blog Title">
                         <label for="title">Title</label>
                     </div>
 
@@ -108,6 +96,11 @@
                         <label for="tags">Tags (comma-separated)</label>
                     </div>
 
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="publish_date" name="publish_date" oninput="updatePreview()">
+                        <label for="publish_date">Publish Date</label>
+                    </div>
+
                     <div class="mb-3">
                         <label for="cover_image" class="form-label">Cover Image</label>
                         <input class="form-control" type="file" id="cover_image" name="cover_image">
@@ -115,12 +108,7 @@
 
                     <div class="mb-3">
                         <label for="content" class="form-label">Content</label>
-                        <textarea id="content" name="content" class="form-control" rows="5" oninput="updatePreview()"></textarea>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="publish_date" name="publish_date" oninput="updatePreview()">
-                        <label for="publish_date">Publish Date</label>
+                        <textarea id="content" name="content" class="form-control tinymce-editor" rows="5"></textarea>
                     </div>
 
                     <div class="form-floating mb-4">
@@ -141,28 +129,82 @@
                 </form>
             </div>
 
+
+            <div class="preview-container" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                <h2 class="fw-bold text-center mb-4">Blog Preview</h2>
+                <h2 id="preview-title" style="font-weight: 800; font-size: 30px; margin-bottom: 8px; color: #222; word-break: break-word;">
+                    Title will appear here
+                </h2>
+
+                <p id="preview-category" style="font-size: 14px; color: #6c757d; margin-bottom: 5px; word-break: break-word;">
+                    Category will appear here
+                </p>
+
+                <p id="preview-tags" style="font-size: 14px; color: #6c757d; margin-bottom: 20px; word-break: break-word;">
+                    Tags will appear here
+                </p>
+
+                <p id="preview-publish-date" style="font-size: 14px; color: #6c757d; margin-bottom: 20px;">
+                    Publish Date will appear here
+                </p>
+
+                <img id="preview-image" src="https://via.placeholder.com/800x400?text=Cover+Image+Preview" alt="Cover Image Preview"
+                     style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 25px; object-fit: cover;">
+
+                <div id="preview-content" style="font-size: 17px; line-height: 1.8; color: #4a4a4a; white-space: pre-wrap; word-break: break-word;">
+                    Content will appear here
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 @endsection
 
 @push('scripts')
 <script>
     function updatePreview() {
-        const title = document.getElementById('title').value;
-        const category = document.getElementById('category').value;
-        const tags = document.getElementById('tags').value;
-        const content = document.getElementById('content').value;
+        const title = document.getElementById('title').value.trim();
+        const category = document.getElementById('category').value.trim();
+        const tags = document.getElementById('tags').value.trim();
+        const content = tinymce.get('content') ? tinymce.get('content').getContent({ format: 'html' }).trim() : '';
         const publishDate = document.getElementById('publish_date').value;
-        const status = document.getElementById('status').value;
 
         document.getElementById('preview-title').innerText = title || 'Title will appear here';
-        document.getElementById('preview-category').innerText = category || 'Category will appear here';
-        document.getElementById('preview-tags').innerText = tags || 'Tags will appear here';
-        document.getElementById('preview-content').innerText = content || 'Content will appear here';
-        document.getElementById('preview-publish-date').innerText = publishDate ? new Date(publishDate).toLocaleDateString() : 'Publish Date will appear here';
-        document.getElementById('preview-status').innerText = status || 'Status will appear here';
+        document.getElementById('preview-category').innerText = category ? `Category: ${category}` : 'Category will appear here';
+        document.getElementById('preview-tags').innerText = tags ? `Tags: ${tags}` : 'Tags will appear here';
+        document.getElementById('preview-content').innerHTML = content || 'Content will appear here';
+
+        if (publishDate) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('preview-publish-date').innerText = new Date(publishDate).toLocaleDateString(undefined, options);
+        } else {
+            document.getElementById('preview-publish-date').innerText = 'Publish Date will appear here';
+        }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const fallbackImage = "{{ asset('images/istockphoto-1147544807-612x612.jpg') }}";
+
+        document.getElementById('title').addEventListener('input', updatePreview);
+        document.getElementById('category').addEventListener('input', updatePreview);
+        document.getElementById('tags').addEventListener('input', updatePreview);
+        document.getElementById('publish_date').addEventListener('input', updatePreview);
+
+        document.getElementById('cover_image').addEventListener('change', function(event) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('preview-image').src = e.target.result;
+            }
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            } else {
+                document.getElementById('preview-image').src = fallbackImage;
+            }
+        });
+        document.getElementById('preview-image').src = fallbackImage;
+        updatePreview();
+    });
 </script>
 @endpush
+
+
