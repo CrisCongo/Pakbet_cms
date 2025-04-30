@@ -77,21 +77,21 @@
 
 <div class="content-container flex-grow-1">
     <div class="container py-5">
-        <div class="flex-container">
-            <div class="card card-custom">
+        <div class="flex-container" style="height: 75vh;">
+            <div class="card card-custom" style="flex: 1 1 45%; height: 100%;">
                 <h2 class="fw-bold text-center mb-4">Add FAQ</h2>
 
-                <form action="{{ route('faqs.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('faqs.store') }}" method="POST" enctype="multipart/form-data" style="height: 100%; overflow-y: auto;">
                     @csrf
                     @method('PUT')
 
                     <div class="mb-3">
-                        <label for="question" class="form-label">Question</label>
+                        <label for="question" class="form-label"><strong>Question</strong></label>
                         <textarea id="question" name="question" class="tinymce-editor">Here's a question</textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="answer" class="form-label">Answer</label>
+                        <label for="answer" class="form-label"><strong>Answer</strong></label>
                         <textarea id="answer" name="answer" class="tinymce-editor">Here's an answer</textarea>
                     </div>
 
@@ -116,9 +116,9 @@
                 </form>
             </div>
 
-            <div class="preview-container sticky-top">
+            <div class="preview-container" style="flex: 1 1 45%; height: 100%;">
                 <h3 class="fw-bold text-center mb-3">Live Preview</h3>
-                <div class="p-4 rounded border bg-light">
+                <div class="p-4 rounded border bg-light overflow-auto" style="height: calc(100% - 60px);">
                     <h4 id="preview-question" class="fw-bold mb-3">Here's a question</h4>
                     <div id="preview-answer" class="mb-3">Here's an answer</div>
                 </div>
