@@ -81,7 +81,7 @@
             <div class="card card-custom">
                 <h2 class="fw-bold text-center mb-4">Add FAQ</h2>
 
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('faqs.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -116,7 +116,7 @@
                 </form>
             </div>
 
-            <div class="preview-container">
+            <div class="preview-container sticky-top">
                 <h3 class="fw-bold text-center mb-3">Live Preview</h3>
                 <div class="p-4 rounded border bg-light">
                     <h4 id="preview-question" class="fw-bold mb-3">Here's a question</h4>
