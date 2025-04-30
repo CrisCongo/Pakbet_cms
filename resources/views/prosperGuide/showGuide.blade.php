@@ -96,7 +96,6 @@
                                             </label></th>
                                             <th>Guide ID</th>
                                             <th>Zodiac</th>
-                                            <th>Title</th>
                                             <th>Overview</th>
                                             <th>Career</th>
                                             <th>Health</th>
@@ -113,7 +112,6 @@
                                                 <td><input type="checkbox" name="guide_checkbox"></td>
                                                 <td>1</td><!--Guide ID-->
                                                 <td>Rat</td><!--Zodiac Selection-->
-                                                <td>Title</td><!--Title-->
                                                 <td>Here is an Overview</td><!--Overview content-->
                                                 <td>Here is a Career Guide</td><!--Career content-->
                                                 <td>Here is a Health Guide</td><!--Health content-->
@@ -134,16 +132,6 @@
                                         <!--@ endforeach-->
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="d-flex flex-wrap gap-2 m-3 btn-group-mobile">
-                                <a href="{{ route('guide.add') }}"
-                                    class="btn btn-sm text-white"
-                                    style="background-color: rgba(162, 32, 26, 1);"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="Add Blogs Here">
-                                    Add Guide
-                                </a>
                             </div>
                         </div>
                     </div>

@@ -98,8 +98,6 @@
                                             <th>Title</th>
                                             <th>Category</th>
                                             <th>Tags</th>
-                                            <th>Cover Image</th>
-                                            <th>Content</th>
                                             <th>Status</th>
                                             <th>Publish Date</th>
                                             <th>Action</th>
@@ -113,8 +111,6 @@
                                                 <td>Feng Shui Basics</td><!--Title-->
                                                 <td>Guides</td><!--Category-->
                                                 <td>feng shui, beginner</td><!--tags-->
-                                                <td><img src="https://via.placeholder.com/50" class="img-thumbnail"></td><!--Cover Image-->
-                                                <td>A quick intro to feng shui principles...</td><!--Content-->
                                                 <td><span class="badge bg-secondary">Post status</td><!--Status-->
                                                 <td>02/02/2025</td><!--Publish Date-->
                                                 <td>

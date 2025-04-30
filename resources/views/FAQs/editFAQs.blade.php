@@ -45,54 +45,101 @@
     .btn-cancel:hover {
         background-color: #bd2130;
     }
+    .flex-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+    .preview-container, .card-custom {
+        width: 45%;
+    }
+    .preview-container {
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        max-width: 800px;
+    }
+    @media (max-width: 768px) {
+        .preview-container, .card-custom {
+            width: 100%;
+        }
+    }
+    #preview-question,
+    #preview-answer {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
 </style>
 
 <div class="content-container flex-grow-1">
     <div class="container py-5">
-        <div class="card card-custom">
-            <h2 class="fw-bold text-center mb-4">Edit FAQ</h2>
+        <div class="flex-container">
+            <div class="card card-custom">
+                <h2 class="fw-bold text-center mb-4">Edit FAQ</h2>
 
-            <form action="#" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
+                <form action="#" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
 
-                <div class="mb-3">
-                    <label for="question" class="form-label">Question</label>
-                    <textarea id="question" name="question" class="tinymce-editor">Here's a question</textarea>
+                    <div class="mb-3">
+                        <label for="question" class="form-label">Question</label>
+                        <textarea id="question" name="question" class="tinymce-editor">Here's a question</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="answer" class="form-label">Answer</label>
+                        <textarea id="answer" name="answer" class="tinymce-editor">Here's an answer</textarea>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="publish_date" name="publish_date" value="#">
+                        <label for="publish_date">Publish Date</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <select class="form-select" id="status" name="status">
+                            <option value="draft">Draft</option>
+                            <option value="archive">Archive</option>
+                            <option value="published">Published</option>
+                        </select>
+                        <label for="status">Status</label>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('faqs.index') }}" class="btn btn-cancel me-2">Cancel</a>
+                        <button type="submit" class="btn btn-custom">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="preview-container">
+                <h3 class="fw-bold text-center mb-3">Live Preview</h3>
+                <div class="p-4 rounded border bg-light">
+                    <h4 id="preview-question" class="fw-bold mb-3">Here's a question</h4>
+                    <div id="preview-answer" class="mb-3">Here's an answer</div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="answer" class="form-label">Answer</label>
-                    <textarea id="answer" name="answer" class="tinymce-editor">Here's an answer</textarea>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="publish_date" name="publish_date" value="#">
-                    <label for="publish_date">Publish Date</label>
-                </div>
-
-                <div class="form-floating mb-4">
-                    <select class="form-select" id="status" name="status">
-                        <option value="draft">Draft</option>
-                        <option value="archive">Archive</option>
-                        <option value="published">Published</option>
-                    </select>
-                    <label for="status">Status</label>
-                </div>
-
-                <div class="d-flex justify-content-end">
-                    <a href="{{ route('faqs.index') }}" class="btn btn-cancel me-2">Cancel</a>
-                    <button type="submit" class="btn btn-custom">Save Changes</button>
-                </div>
-
-            </form>
+            </div>
         </div>
     </div>
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
+<script>
+    function updatePreview() {
+        const questionContent = tinymce.get('question')?.getContent() || 'Here\'s a question';
+        const answerContent = tinymce.get('answer')?.getContent() || 'Here\'s an answer';
 
+        document.getElementById('preview-question').innerHTML = questionContent;
+        document.getElementById('preview-answer').innerHTML = answerContent;
+    }
 
-@endsection
-
+    document.addEventListener('DOMContentLoaded', function () {
+        updatePreview();
+    });
+</script>
+@endpush

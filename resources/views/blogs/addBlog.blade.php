@@ -93,7 +93,7 @@
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="tags" name="tags" placeholder="Tags" oninput="updatePreview()">
-                        <label for="tags">Tags (comma-separated)</label>
+                        <label for="tags">Tags </label>
                     </div>
 
                     <div class="form-floating mb-3">
