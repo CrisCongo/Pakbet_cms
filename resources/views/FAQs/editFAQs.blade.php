@@ -81,30 +81,30 @@
             <div class="card card-custom">
                 <h2 class="fw-bold text-center mb-4">Edit FAQ</h2>
 
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('faq.update', $faq->faqID) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <div class="mb-3">
                         <label for="question" class="form-label">Question</label>
-                        <textarea id="question" name="question" class="tinymce-editor">Here's a question</textarea>
+                        <textarea id="question" name="question" class="tinymce-editor">{{ $faq->question }}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="answer" class="form-label">Answer</label>
-                        <textarea id="answer" name="answer" class="tinymce-editor">Here's an answer</textarea>
+                        <textarea id="answer" name="answer" class="tinymce-editor">{{ $faq->answer }}</textarea>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="publish_date" name="publish_date" value="#">
+                        <input type="date" class="form-control" id="publish_date" name="publish_date" value="{{ \Carbon\Carbon::parse($faq->publish_date)->format('Y-m-d') }}">
                         <label for="publish_date">Publish Date</label>
                     </div>
 
                     <div class="form-floating mb-4">
                         <select class="form-select" id="status" name="status">
-                            <option value="draft">Draft</option>
-                            <option value="archive">Archive</option>
-                            <option value="published">Published</option>
+                            <option value="draft" {{ $faq->status === 'draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="archived" {{ $faq->status === 'archived' ? 'selected' : '' }}>Archive</option>
+                            <option value="published" {{ $faq->status === 'published' ? 'selected' : '' }}>Published</option>
                         </select>
                         <label for="status">Status</label>
                     </div>

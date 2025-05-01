@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
 @extends('layouts.app')
 @section('title', 'FAQs')
 @section('content')
@@ -73,9 +76,6 @@
                             </div>
 
                             <div class="d-flex flex-wrap gap-2 m-3 btn-group-mobile">
-                                <button id="exportCSV" class="btn btn-outline-dark btn-sm">
-                                    <i class="fas fa-file-csv"></i> Export CSV
-                                </button><!--redundant pwedeng tanggalin-->
                                 <button id="exportExcel" class="btn btn-sm text-white" style="background-color: rgba(162, 32, 26, 1);">
                                     <i class="fas fa-file-excel"></i> Export Excel
                                 </button>
@@ -103,27 +103,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!--@ foreach /**($faqs as $faq)**/-->
+                                        @foreach($faqs as $faq)
                                             <tr>
-                                                <td><input type="checkbox" name="faqs_checkbox"></td><!--value="{ { $faq->xxxx }}"-->
-                                                <td>1</td><!--FAQ ID-->
-                                                <td>Here is a question</td><!--Question-->
-                                                <td>Here is an answer</td><!--Answer-->
-                                                <td><span class="badge bg-success">Post status</td><!--Status-->
-                                                <td>02/02/2025</td><!--Publish Date-->
+                                                <td><input type="checkbox" name="faqs_checkbox" value="{{ $faq->faqID }}"></td>
+                                                <td>{{ $faq->faqID }}</td>
+                                                <td>{!! Str::limit(strip_tags($faq->question), 20) !!}</td>
+                                                <td>{!! Str::limit(strip_tags($faq->answer), 20) !!}</td>
                                                 <td>
-                                                    <a href="{{ route('faq.edit') }}"
-                                                        class="btn btn-outline-dark btn-sm edit-btn"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Edit FAQs Details">
-                                                        Edit
-                                                    </a><!--data-id="{ { $faq->xxx }}"-->
+                                                    <span class="badge
+                                                        @if($faq->status === 'published') bg-success
+                                                        @elseif($faq->status === 'archived') bg-danger
+                                                        @else bg-secondary @endif">
+                                                        {{ ucfirst($faq->status) }}
+                                                    </span>
+                                                </td>
+                                                <td>{{ \Carbon\Carbon::parse($faq->publish_date)->format('m/d/Y') }}</td>
+                                                <td>
+                                                    <a href="{{ route('faq.edit', ['id' => $faq->faqID]) }}"
+                                                       class="btn btn-outline-dark btn-sm edit-btn"
+                                                       data-bs-toggle="tooltip"
+                                                       data-bs-placement="top"
+                                                       title="Edit FAQs Details">
+                                                       Edit
+                                                    </a>
                                                 </td>
                                             </tr>
-                                        <!--@ endforeach-->
+                                        @endforeach
                                     </tbody>
                                 </table>
+                                <div class="d-flex justify-content-center mt-3">
+                                    {{ $faqs->links('pagination::bootstrap-5') }}
+                                </div>
                             </div>
                             <div class="d-flex flex-wrap gap-2 m-3 btn-group-mobile">
                                 <a href="{{ route('faq.add') }}"
@@ -145,6 +155,65 @@
 
 @section('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#select-all').on('change', function () {
+                $('.faq-checkbox').prop('checked', $(this).is(':checked'));
+            });
+
+            $('.faq-checkbox').on('change', function () {
+                let allChecked = $('.faq-checkbox').length === $('.faq-checkbox:checked').length;
+                $('#select-all').prop('checked', allChecked);
+            });
+
+            $('.bulk-action').on('click', function () {
+                var action = $(this).data('action');
+                var selectedFaqs = [];
+
+                $('input[name="faqs_checkbox"]:checked').each(function () {
+                    selectedFaqs.push($(this).val());
+                });
+
+                if (selectedFaqs.length === 0) {
+                    alert('Please select at least one FAQ.');
+                    return;
+                }
+
+                $.ajax({
+                    url: '{{ route("faq.updateStatus") }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        faqs: selectedFaqs,
+                        action: action
+                    },
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (error) {
+                        alert('Something went wrong, please try again.');
+                    }
+                });
+            });
+
+            $('#exportExcel').on('click', function () {
+                let table = document.getElementById('customersTable').cloneNode(true);
+
+                for (let row of table.rows) {
+                    row.deleteCell(0);
+                    row.deleteCell(row.cells.length - 1);
+                }
+
+                let html = '<html><head><meta charset="UTF-8"></head><body>' + table.outerHTML + '</body></html>';
+                let blob = new Blob([html], { type: "application/vnd.ms-excel" });
+                let url = URL.createObjectURL(blob);
+
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = 'faqs_export.xls';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        });
+    </script>
 @endsection

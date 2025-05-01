@@ -29,7 +29,9 @@ Route::get('/blogs/edit', [BlogController::class, 'edit'])->name('blog.edit');
 Route::get('/blogs/add', [BlogController::class, 'add'])->name('blog.add');
 
 Route::get('/FAQs', [FAQcontroller::class, 'index'])->name('faqs.index');
-Route::get('/FAQs/edit', [FAQcontroller::class, 'edit'])->name('faq.edit');
+Route::post('/FAQs/updateStatus', [FAQcontroller::class, 'updateStatus'])->name('faq.updateStatus');
+Route::get('/FAQs/edit/{id}', [FAQcontroller::class, 'edit'])->name('faq.edit');
+Route::put('/FAQs/update/{id}', [FAQcontroller::class, 'update'])->name('faq.update');
 Route::get('/FAQs/add', [FAQcontroller::class, 'add'])->name('faq.add');
 Route::put('/FAQs', [FAQcontroller::class, 'store'])->name('faqs.store');
 

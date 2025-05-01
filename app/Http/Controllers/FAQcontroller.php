@@ -10,11 +10,46 @@ class FAQcontroller extends Controller
 {
     public function index()
     {
-        return view('FAQs.showFAQs');//temporary
+        $faqs = Faq::paginate(10); // 10 FAQs per page
+        return view('FAQs.showFAQs', compact('faqs'));
     }
-    public function edit()
+    public function updateStatus(Request $request)
     {
-        return view('FAQs.editFAQs');
+        $validated = $request->validate([
+            'faqs' => 'required|array', // Ensure that an array of FAQ IDs is passed
+            'action' => 'required|in:activate,deactivate', // Action: 'activate' (publish) or 'deactivate' (archive)
+        ]);
+
+        $faqs = Faq::whereIn('faqID', $validated['faqs']); // Get the selected FAQs by their IDs
+
+        if ($validated['action'] == 'activate') {
+            $faqs->update(['status' => 'published']);
+            return redirect()->route('faqs.index')->with('success', 'Selected FAQs have been published!');
+        } elseif ($validated['action'] == 'deactivate') {
+            $faqs->update(['status' => 'archived']);
+            return redirect()->route('faqs.index')->with('success', 'Selected FAQs have been archived!');
+        }
+
+        return redirect()->route('faqs.index')->with('error', 'Invalid action!');
+    }
+    public function edit($id)
+    {
+        $faq = Faq::findOrFail($id);
+        return view('FAQs.editFAQs', compact('faq'));
+    }
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'question' => 'required|string',
+            'answer' => 'required|string',
+            'publish_date' => 'nullable|date',
+            'status' => 'required|in:draft,published,archived',
+        ]);
+
+        $faq = Faq::findOrFail($id);
+        $faq->update($validated);
+
+        return redirect()->route('faqs.index')->with('success', 'FAQ updated successfully!');
     }
     public function add()
     {
