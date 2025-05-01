@@ -10,17 +10,17 @@ class FAQcontroller extends Controller
 {
     public function index()
     {
-        $faqs = Faq::paginate(10); // 10 FAQs per page
+        $faqs = Faq::paginate(10);
         return view('FAQs.showFAQs', compact('faqs'));
     }
     public function updateStatus(Request $request)
     {
         $validated = $request->validate([
-            'faqs' => 'required|array', // Ensure that an array of FAQ IDs is passed
-            'action' => 'required|in:activate,deactivate', // Action: 'activate' (publish) or 'deactivate' (archive)
+            'faqs' => 'required|array',
+            'action' => 'required|in:activate,deactivate',
         ]);
 
-        $faqs = Faq::whereIn('faqID', $validated['faqs']); // Get the selected FAQs by their IDs
+        $faqs = Faq::whereIn('faqID', $validated['faqs']);
 
         if ($validated['action'] == 'activate') {
             $faqs->update(['status' => 'published']);

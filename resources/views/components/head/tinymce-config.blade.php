@@ -19,6 +19,11 @@
                         updatePreview();
                     }
                 });
+            },
+            init_instance_callback: function(editor) {
+                if (typeof updatePreview === 'function') {
+                    updatePreview();
+                }
             }
         });
     </script>

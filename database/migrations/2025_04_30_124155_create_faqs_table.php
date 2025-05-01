@@ -12,12 +12,12 @@ class CreateFaqsTable extends Migration
     public function up(): void
     {
         Schema::create('faqs', function (Blueprint $table) {
-            $table->id('faqID'); // primary key
+            $table->id('faqID');
             $table->longText('question');
             $table->longText('answer');
             $table->dateTime('publish_date')->nullable();
             $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
-            $table->timestamps(); // created_at and updated_at
+            $table->timestamps();
         });
     }
 

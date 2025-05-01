@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Add Guide')
+@section('title', 'Edit Guide')
 
 @section('content')
 
@@ -84,49 +84,49 @@
         <div class="flex-container">
             <div class="card card-custom">
                 <h2 class="fw-bold text-center mb-4">Edit Prosper Guide</h2>
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('guide.update', $guide->zodiacID) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <div class="form-floating mb-4">
-                        <h2>Zodiac: <strong>Rat</strong></h2><!--{ { $zodiac should be Rat }}-->
+                        <h2>Zodiac: <strong>{{ $guide->zodiacID }}</strong></h2>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="publish_date" name="publish_date" value="#">
+                        <input type="date" class="form-control" id="publish_date" name="publish_date"value="{{ $guide->publish_date->format('Y-m-d') }}">
                         <label for="publish_date">Publish Date</label>
                     </div>
 
                     <div class="mb-3">
                         <label for="overview" class="form-label">Overview</label>
-                        <textarea id="overview" name="overview" class="tinymce-editor">#</textarea>
+                        <textarea id="overview" name="overview" class="tinymce-editor">{{ $guide->overview }}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="career" class="form-label">Career</label>
-                        <textarea id="career" name="career" class="tinymce-editor">#</textarea>
+                        <textarea id="career" name="career" class="tinymce-editor">{{ $guide->career }}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="health" class="form-label">Health</label>
-                        <textarea id="health" name="health" class="tinymce-editor">#</textarea>
+                        <textarea id="health" name="health" class="tinymce-editor">{{ $guide->health }}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="love" class="form-label">Love</label>
-                        <textarea id="love" name="love" class="tinymce-editor">#</textarea>
+                        <textarea id="love" name="love" class="tinymce-editor">{{ $guide->love }}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="wealth" class="form-label">Wealth</label>
-                        <textarea id="wealth" name="wealth" class="tinymce-editor">#</textarea>
+                        <textarea id="wealth" name="wealth" class="tinymce-editor">{{ $guide->wealth }}</textarea>
                     </div>
 
                     <div class="form-floating mb-4">
                         <select class="form-select" id="status" name="status">
-                            <option value="draft">Draft</option>
-                            <option value="archive">Archive</option>
-                            <option value="published">Published</option>
+                            <option value="draft" {{ $guide->status == 'draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="archive" {{ $guide->status == 'archive' ? 'selected' : '' }}>Archive</option>
+                            <option value="published" {{ $guide->status == 'published' ? 'selected' : '' }}>Published</option>
                         </select>
                         <label for="status">Status</label>
                     </div>
@@ -138,8 +138,8 @@
                 </form>
             </div>
             <div class="preview-container sticky-top" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                <h2 class="fw-bold text-center mb-4">Blog Preview</h2>
-                <h2 id="preview-zodiac" class="fw-bold mb-1 text-uppercase" style="font-weight: 800; font-size: 30px; margin-bottom: 8px; color: #222;">Rat</h2>
+                <h2 class="fw-bold text-center mb-4">Guide Preview</h2>
+                <h2 id="preview-zodiac" class="fw-bold mb-1 text-uppercase" style="font-weight: 800; font-size: 30px; margin-bottom: 8px; color: #222;">{{ $guide->zodiacID }}</h2>
                 <p id="preview-date" class="text-uppercase text-muted mb-4">OVERALL FORECAST OF [YEAR]</p>
 
                 <div class="accordion" id="previewAccordion">
@@ -157,7 +157,7 @@
                             <div id="collapse-{{ $section }}" class="accordion-collapse collapse {{ $section === 'overview' ? 'show' : '' }}"
                                 aria-labelledby="heading-{{ $section }}" data-bs-parent="#previewAccordion">
                                 <div class="accordion-body" id="preview-{{ $section }}">
-                                    {{ ucfirst($section) }} content will appear here
+                                    {{ $guide->$section }}
                                 </div>
                             </div>
                         </div>
@@ -172,19 +172,28 @@
 @push('scripts')
 <script>
     function updatePreview() {
-        const publishDate = document.getElementById('publish_date').value;
-
-        const year = publishDate ? new Date(publishDate).getFullYear() : '[YEAR]';
-        document.getElementById('preview-date').innerText = `OVERALL FORECAST OF ${year}`;
-
-        ['overview', 'career', 'health', 'love', 'wealth'].forEach(field => {
-            const content = tinymce.get(field)?.getContent() || `${field.charAt(0).toUpperCase() + field.slice(1)} content will appear here`;
-            document.getElementById(`preview-${field}`).innerHTML = content;
+        const fields = ['overview', 'career', 'health', 'love', 'wealth'];
+        fields.forEach(field => {
+            const content = tinymce.get(field)?.getContent() || '';
+            const preview = document.getElementById('preview-' + field);
+            if (preview) {
+                preview.innerHTML = content;
+            }
         });
+        const dateInput = document.getElementById('publish_date');
+        const datePreview = document.getElementById('preview-date');
+        if (dateInput && datePreview) {
+            const dateValue = dateInput.value;
+            const year = dateValue ? new Date(dateValue).getFullYear() : new Date().getFullYear();
+            datePreview.innerText = `OVERALL FORECAST OF ${year}`;
+        }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('publish_date').addEventListener('change', updatePreview);
+    document.addEventListener('DOMContentLoaded', function () {
+        const dateInput = document.getElementById('publish_date');
+        if (dateInput) {
+            dateInput.addEventListener('input', updatePreview);
+        }
     });
 </script>
 @endpush

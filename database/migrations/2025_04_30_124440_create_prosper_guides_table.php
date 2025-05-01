@@ -15,7 +15,7 @@ class CreateProsperGuidesTable extends Migration
             $table->enum('zodiacID', [
                 'Rat', 'Ox', 'Tiger', 'Rabbit', 'Dragon', 'Snake',
                 'Horse', 'Goat', 'Monkey', 'Rooster', 'Dog', 'Pig'
-            ])->primary(); // zodiacID as primary key
+            ])->primary();
             $table->longText('overview');
             $table->longText('career');
             $table->longText('health');

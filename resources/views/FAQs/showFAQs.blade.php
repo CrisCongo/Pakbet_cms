@@ -87,7 +87,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table id="customersTable" class="table">
+                                <table id="faqTable" class="table">
                                     <thead>
                                         <tr>
                                             <th><label>
@@ -155,8 +155,20 @@
 
 @section('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function () {
+            $('#faqTable').DataTable({
+                "order": [[1, "desc"]],
+                "columnDefs": [
+                    { "orderable": false, "targets": [0, 6] }
+                ]
+            });
+
             $('#select-all').on('change', function () {
                 $('.faq-checkbox').prop('checked', $(this).is(':checked'));
             });
@@ -175,45 +187,57 @@
                 });
 
                 if (selectedFaqs.length === 0) {
-                    alert('Please select at least one FAQ.');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No Selection',
+                        text: 'Please select at least one FAQ.',
+                        confirmButtonColor: '#a2201a'
+                    });
                     return;
                 }
 
-                $.ajax({
-                    url: '{{ route("faq.updateStatus") }}',
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        faqs: selectedFaqs,
-                        action: action
-                    },
-                    success: function (response) {
-                        location.reload();
-                    },
-                    error: function (error) {
-                        alert('Something went wrong, please try again.');
+                let actionText = action === 'publish' ? 'publish' : 'archive';
+                let confirmationText = action === 'publish' ? 'publish the selected FAQs.' : 'archive the selected FAQs.';
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: `You are about to ${confirmationText}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#28a745',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: `Yes, ${actionText} them!`
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('faq.updateStatus') }}',
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                faqs: selectedFaqs,
+                                action: action
+                            },
+                            success: function (response) {
+                                location.reload();
+                            },
+                            error: function (error) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Something went wrong, please try again.',
+                                    confirmButtonColor: '#a2201a'
+                                });
+                            }
+                        });
                     }
                 });
             });
 
             $('#exportExcel').on('click', function () {
-                let table = document.getElementById('customersTable').cloneNode(true);
-
-                for (let row of table.rows) {
-                    row.deleteCell(0);
-                    row.deleteCell(row.cells.length - 1);
-                }
-
-                let html = '<html><head><meta charset="UTF-8"></head><body>' + table.outerHTML + '</body></html>';
-                let blob = new Blob([html], { type: "application/vnd.ms-excel" });
-                let url = URL.createObjectURL(blob);
-
-                let a = document.createElement('a');
-                a.href = url;
-                a.download = 'faqs_export.xls';
-                a.click();
-                URL.revokeObjectURL(url);
+                var wb = XLSX.utils.table_to_book(document.getElementById('faqTable'), { sheet: "FAQs" });
+                XLSX.writeFile(wb, 'faqs.xlsx');
             });
         });
     </script>
 @endsection
+

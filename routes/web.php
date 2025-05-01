@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FAQcontroller;
 use App\Http\Controllers\GuideController;
+use App\Models\ProsperGuide;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -24,9 +25,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');//->middleware('auth'); <--mamaya na to hahahaha di pa ayos login
 
-Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
-Route::get('/blogs/edit', [BlogController::class, 'edit'])->name('blog.edit');
+Route::get('/blogs', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blogs/edit/{blogID}', [BlogController::class, 'edit'])->name('blog.edit');
+Route::put('/blogs/update/{blogID}', [BlogController::class, 'update'])->name('blog.update');
+Route::post('/blogs/bulk-update', [BlogController::class, 'bulkUpdate'])->name('blog.bulkUpdate');
 Route::get('/blogs/add', [BlogController::class, 'add'])->name('blog.add');
+Route::post('/blogs/store', [BlogController::class, 'store'])->name('blog.store');
 
 Route::get('/FAQs', [FAQcontroller::class, 'index'])->name('faqs.index');
 Route::post('/FAQs/updateStatus', [FAQcontroller::class, 'updateStatus'])->name('faq.updateStatus');
@@ -37,5 +41,7 @@ Route::put('/FAQs', [FAQcontroller::class, 'store'])->name('faqs.store');
 
 
 Route::get('/prosperGuide', [GuideController::class, 'index'])->name('guide.index');
-Route::get('/prosperGuide/edit', [GuideController::class, 'edit'])->name('guide.edit');
-Route::get('/prosperGuide/add', [GuideController::class, 'add'])->name('guide.add');
+Route::get('/prosperGuide/edit/{zodiacID}', [GuideController::class, 'edit'])->name('guide.edit');
+Route::put('/prosperGuide/edit/{zodiacID}', [GuideController::class, 'update'])->name('guide.update');
+Route::post('/prosperGuide/bulk-update', [GuideController::class, 'bulkUpdate'])->name('guide.bulkUpdate');
+

@@ -9,6 +9,18 @@ class Blog extends Model
 {
     use HasFactory;
 
-    // Optionally, you can define fillable attributes to protect mass-assignment vulnerabilities
-    protected $fillable = ['title', 'category', 'tags', 'cover_image', 'content', 'publish_date', 'status'];
+    protected $table = 'blogs';
+    protected $primaryKey = 'blogID';
+    public $incrementing = true;
+    protected $keyType = 'int';
+
+    protected $fillable = [
+        'title',
+        'category',
+        'tags',
+        'publish_date',
+        'status',
+        'cover_image',
+        'content',
+    ];
 }

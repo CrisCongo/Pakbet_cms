@@ -12,15 +12,15 @@ class CreateBlogsTable extends Migration
     public function up(): void
     {
         Schema::create('blogs', function (Blueprint $table) {
-            $table->id('blogID');
+            $table->bigIncrements('blogID');
             $table->string('title');
             $table->string('category');
-            $table->string('tags')->nullable(); //comma-separated
+            $table->string('tags')->nullable();
             $table->string('cover_image')->nullable();
             $table->longText('content');
             $table->dateTime('publish_date')->nullable();
             $table->enum('status', ['draft', 'archive', 'published'])->default('draft');
-            $table->timestamps(); // created_at and updated_at
+            $table->timestamps();
         });
     }
 

@@ -77,9 +77,8 @@
             <div class="card card-custom">
                 <h2 class="fw-bold text-center mb-4">Add Blog</h2>
 
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="title" name="title" placeholder="Blog Title">
@@ -122,7 +121,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('blogs.index') }}" class="btn btn-cancel me-2">Cancel</a>
+                        <a href="{{ route('blog.index') }}" class="btn btn-cancel me-2">Cancel</a>
                         <button type="submit" class="btn btn-custom">Save Changes</button>
                     </div>
 

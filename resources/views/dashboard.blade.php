@@ -10,7 +10,7 @@
                     <i class="fas fa-edit fa-3x text-primary mb-3"></i>
                     <h5 class="card-title">Blog Post</h5>
                     <p class="card-text">Manage and edit your blog posts with ease.</p>
-                    <a href="{{ route('blogs.index') }}"  class="btn btn-primary">Manage Blogs</a>
+                    <a href="{{ route('blog.index') }}"  class="btn btn-primary">Manage Blogs</a>
                 </div>
             </div>
         </div>

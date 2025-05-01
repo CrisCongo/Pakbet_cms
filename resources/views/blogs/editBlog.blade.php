@@ -80,30 +80,30 @@
 
 <div class="content-container flex-grow-1">
     <div class="container py-5">
-        <div class="flex-container">
-            <div class="card card-custom">
+        <div class="flex-container" style="height: 75vh;">
+            <div class="card card-custom" style="flex: 1 1 45%; height: 100%;">
                 <h2 class="fw-bold text-center mb-4">Edit Blog</h2>
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('blog.update', $blog->blogID) }}" method="POST" enctype="multipart/form-data" style="height: 100%; overflow-y: auto;">
                     @csrf
                     @method('PUT')
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Blog Title" value="#" oninput="updatePreview()">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Blog Title" value="{{ old('title', $blog->title) }}" oninput="updatePreview()">
                         <label for="title">Title</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="category" name="category" placeholder="Category" value="#" oninput="updatePreview()">
+                        <input type="text" class="form-control" id="category" name="category" placeholder="Category" value="{{ old('category', $blog->category) }}" oninput="updatePreview()">
                         <label for="category">Category</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="tags" name="tags" placeholder="Tags" value="#" oninput="updatePreview()">
+                        <input type="text" class="form-control" id="tags" name="tags" placeholder="Tags" value="{{ old('tags', $blog->tags) }}" oninput="updatePreview()">
                         <label for="tags">Tags (comma-separated)</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="publish_date" name="publish_date" value="#" oninput="updatePreview()">
+                        <input type="date" class="form-control" id="publish_date" name="publish_date" value="{{ old('publish_date', $blog->publish_date) }}" oninput="updatePreview()">
                         <label for="publish_date">Publish Date</label>
                     </div>
 
@@ -114,37 +114,41 @@
 
                     <div class="mb-3">
                         <label for="content" class="form-label">Content</label>
-                        <textarea id="content" name="content" class="tinymce-editor" rows="5">#</textarea>
+                        <textarea id="content" name="content" class="tinymce-editor" rows="5">{{ old('content', $blog->content) }}</textarea>
                     </div>
 
                     <div class="form-floating mb-4">
                         <select class="form-select" id="status" name="status" onchange="updatePreview()">
-                            <option value="draft">Draft</option>
-                            <option value="archive">Archive</option>
-                            <option value="published">Published</option>
+                            <option value="draft" {{ old('status', $blog->status) == 'draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="archive" {{ old('status', $blog->status) == 'archive' ? 'selected' : '' }}>Archive</option>
+                            <option value="published" {{ old('status', $blog->status) == 'published' ? 'selected' : '' }}>Published</option>
                         </select>
                         <label for="status">Status</label>
                     </div>
-
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('blogs.index') }}" class="btn btn-cancel me-2">Cancel</a>
+                        <a href="{{ route('blog.index') }}" class="btn btn-cancel me-2">Cancel</a>
                         <button type="submit" class="btn btn-custom">Save Changes</button>
                     </div>
                 </form>
             </div>
-            <div class="preview-container" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+            <div class="preview-container" style="flex: 1 1 45%; height: 100%;">
                 <h2 class="fw-bold text-center mb-4">Blog Preview</h2>
-                <h2 id="preview-title" style="font-weight: 800; font-size: 30px; margin-bottom: 8px; color: #222;">Title will appear here</h2>
-                <p id="preview-category" style="font-size: 14px; color: #6c757d; margin-bottom: 5px;">Category will appear here</p>
-                <p id="preview-tags" style="font-size: 14px; color: #6c757d; margin-bottom: 20px;">Tags will appear here</p>
-                <p id="preview-publish-date" style="font-size: 14px; color: #6c757d; margin-bottom: 20px;">Publish Date will appear here</p>
-                <img id="preview-image" src="" alt="Cover Image Preview"
-                     style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 25px; object-fit: cover;">
-                <div id="preview-content" style="font-size: 17px; line-height: 1.8; color: #4a4a4a; white-space: pre-wrap; word-break: break-word; overflow-wrap: break-word;">
-                    Content will appear here
+                <div class="p-4 rounded border bg-light overflow-auto" style="height: calc(100% - 60px);">
+                    <h2 id="preview-title" style="font-weight: 800; font-size: 30px; margin-bottom: 8px; color: #222;">Title will appear here</h2>
+                    <p id="preview-category" style="font-size: 14px; color: #6c757d; margin-bottom: 5px;">Category will appear here</p>
+                    <p id="preview-tags" style="font-size: 14px; color: #6c757d; margin-bottom: 20px;">Tags will appear here</p>
+                    <p id="preview-publish-date" style="font-size: 14px; color: #6c757d; margin-bottom: 20px;">Publish Date will appear here</p>
+                    <img id="preview-image"
+                        src="{{ $blog->cover_image ? asset('storage/blogs/' . $blog->cover_image) : asset('images/istockphoto-1147544807-612x612.jpg') }}"
+                        alt="Cover Image Preview"
+                        style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 25px; object-fit: cover;">
+                    <div id="preview-content" style="font-size: 17px; line-height: 1.8; color: #4a4a4a; white-space: pre-wrap; word-break: break-word; overflow-wrap: break-word;">
+                        Content will appear here
+                    </div>
+                    <p>Debug path: {{ $blog->cover_image }}</p>
+
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -173,29 +177,34 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        const fallbackImage = "{{ asset('images/istockphoto-1147544807-612x612.jpg') }}";
+    const fallbackImage = "{{ asset('images/istockphoto-1147544807-612x612.jpg') }}";
+    const currentImage = "{{ asset('storage/blogs/' . $blog->cover_image) }}";
 
-        document.getElementById('title').addEventListener('input', updatePreview);
-        document.getElementById('category').addEventListener('input', updatePreview);
-        document.getElementById('tags').addEventListener('input', updatePreview);
-        document.getElementById('publish_date').addEventListener('input', updatePreview);
+    const previewImg = document.getElementById('preview-image');
+    previewImg.onerror = () => previewImg.src = fallbackImage;  // Fallback image
+    previewImg.src = currentImage || fallbackImage;  // Set initial image or fallback
 
-        document.getElementById('cover_image').addEventListener('change', function(event) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('preview-image').src = e.target.result;
-            }
-            if (event.target.files[0]) {
-                reader.readAsDataURL(event.target.files[0]);
-            } else {
-                document.getElementById('preview-image').src = fallbackImage;
-            }
-        });
+    // Event listeners for live preview update
+    document.getElementById('title').addEventListener('input', updatePreview);
+    document.getElementById('category').addEventListener('input', updatePreview);
+    document.getElementById('tags').addEventListener('input', updatePreview);
+    document.getElementById('publish_date').addEventListener('input', updatePreview);
 
-        document.getElementById('preview-image').src = fallbackImage;
-
-        updatePreview();
+    // Event listener for cover image change
+    document.getElementById('cover_image').addEventListener('change', function(event) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('preview-image').src = e.target.result; // Update the preview with selected image
+        }
+        if (event.target.files[0]) {
+            reader.readAsDataURL(event.target.files[0]);  // Read the selected file as a Data URL
+        } else {
+            document.getElementById('preview-image').src = fallbackImage;  // Fallback if no file selected
+        }
     });
+
+    updatePreview();  // Initialize live preview
+});
 </script>
 @endpush
 
