@@ -8,22 +8,22 @@ use App\Http\Controllers\GuideController;
 use App\Models\ProsperGuide;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', function () {
-    Auth::logout();
-    request()->session()->invalidate();
-    request()->session()->regenerateToken();
-    return redirect('/login');
-})->name('logout');//may problem pa
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+// Route::post('/login', [LoginController::class, 'login']);
+// Route::post('/logout', function () {
+//     Auth::logout();
+//     request()->session()->invalidate();
+//     request()->session()->regenerateToken();
+//     return redirect('/login');
+// })->name('logout');//may problem pa
 
 
 Route::get('/', function () {
     return view('dashboard');
-})->name('dashboard');//->middleware('auth'); <--mamaya na to hahahaha di pa ayos login
+})->name('dashboard');//->middleware('auth'); <--if need ng login
 
 Route::get('/blogs', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blogs/edit/{blogID}', [BlogController::class, 'edit'])->name('blog.edit');
