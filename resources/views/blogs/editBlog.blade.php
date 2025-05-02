@@ -140,7 +140,6 @@
                     <p id="preview-publish-date" style="font-size: 14px; color: #6c757d; margin-bottom: 20px;">Publish Date will appear here</p>
                     <img id="preview-image"
                         src="{{ $blog->cover_image ? asset('storage/' . $blog->cover_image) : asset('images/istockphoto-1147544807-612x612.jpg') }}"
-                        {{-- src="QRiIpxASk8XVwC6BKDQQQO4mlBwP2io8Gkhd4V35.png" --}}
                         alt="Cover Image Preview"
                         style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 25px; object-fit: cover;">
                     <div id="preview-content" style="font-size: 17px; line-height: 1.8; color: #4a4a4a; white-space: pre-wrap; word-break: break-word; overflow-wrap: break-word;">
@@ -179,32 +178,30 @@
 
     document.addEventListener('DOMContentLoaded', function() {
     const fallbackImage = "{{ asset('images/istockphoto-1147544807-612x612.jpg') }}";
-    const currentImage = "{{ asset('storage/blogs/' . $blog->cover_image) }}";
+    const currentImage = "{{ asset('storage/' . $blog->cover_image) }}";
 
     const previewImg = document.getElementById('preview-image');
-    previewImg.onerror = () => previewImg.src = currentImage;  // Fallback image
-    previewImg.src = currentImage || fallbackImage;  // Set initial image or fallback
+    previewImg.onerror = () => previewImg.src = currentImage;
+    previewImg.src = currentImage || fallbackImage;
 
-    // Event listeners for live preview update
     document.getElementById('title').addEventListener('input', updatePreview);
     document.getElementById('category').addEventListener('input', updatePreview);
     document.getElementById('tags').addEventListener('input', updatePreview);
     document.getElementById('publish_date').addEventListener('input', updatePreview);
 
-    // Event listener for cover image change
     document.getElementById('cover_image').addEventListener('change', function(event) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            document.getElementById('preview-image').src = e.target.result; // Update the preview with selected image
+            document.getElementById('preview-image').src = e.target.result;
         }
         if (event.target.files[0]) {
-            reader.readAsDataURL(event.target.files[0]);  // Read the selected file as a Data URL
+            reader.readAsDataURL(event.target.files[0]);
         } else {
-            document.getElementById('preview-image').src = fallbackImage;  // Fallback if no file selected
+            document.getElementById('preview-image').src = fallbackImage;
         }
     });
 
-    updatePreview();  // Initialize live preview
+    updatePreview();
 });
 </script>
 @endpush
