@@ -139,7 +139,8 @@
                     <p id="preview-tags" style="font-size: 14px; color: #6c757d; margin-bottom: 20px;">Tags will appear here</p>
                     <p id="preview-publish-date" style="font-size: 14px; color: #6c757d; margin-bottom: 20px;">Publish Date will appear here</p>
                     <img id="preview-image"
-                        src="{{ $blog->cover_image ? asset('storage/blogs/' . $blog->cover_image) : asset('images/istockphoto-1147544807-612x612.jpg') }}"
+                        src="{{ $blog->cover_image ? asset('storage/' . $blog->cover_image) : asset('images/istockphoto-1147544807-612x612.jpg') }}"
+                        {{-- src="QRiIpxASk8XVwC6BKDQQQO4mlBwP2io8Gkhd4V35.png" --}}
                         alt="Cover Image Preview"
                         style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 25px; object-fit: cover;">
                     <div id="preview-content" style="font-size: 17px; line-height: 1.8; color: #4a4a4a; white-space: pre-wrap; word-break: break-word; overflow-wrap: break-word;">
@@ -181,7 +182,7 @@
     const currentImage = "{{ asset('storage/blogs/' . $blog->cover_image) }}";
 
     const previewImg = document.getElementById('preview-image');
-    previewImg.onerror = () => previewImg.src = fallbackImage;  // Fallback image
+    previewImg.onerror = () => previewImg.src = currentImage;  // Fallback image
     previewImg.src = currentImage || fallbackImage;  // Set initial image or fallback
 
     // Event listeners for live preview update
