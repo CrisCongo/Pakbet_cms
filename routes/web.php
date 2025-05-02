@@ -21,7 +21,7 @@ Route::post('/logout', function () {
 })->name('logout');//may problem pa
 
 
-Route::get('/dashboard', function () {
+Route::get('/', function () {
     return view('dashboard');
 })->name('dashboard');//->middleware('auth'); <--mamaya na to hahahaha di pa ayos login
 

@@ -147,8 +147,10 @@
                     Publish Date will appear here
                 </p>
 
-                <img id="preview-image" src="https://via.placeholder.com/800x400?text=Cover+Image+Preview" alt="Cover Image Preview"
-                     style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 25px; object-fit: cover;">
+                <img id="preview-image"
+                    src="{{ asset('images/istockphoto-1147544807-612x612.jpg')  }}"
+                    alt="Cover Image Preview"
+                    style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 25px; object-fit: cover;">
 
                 <div id="preview-content" style="font-size: 17px; line-height: 1.8; color: #4a4a4a; white-space: pre-wrap; word-break: break-word;">
                     Content will appear here
